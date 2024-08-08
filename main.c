@@ -42,7 +42,7 @@ int main() {
     prod_hex = multiply(num1_hex, num2_hex);
     quot_hex = divide(num1_hex, num2_hex);
 
-    char sum_hex_str[20], diff_hex_str[20], prod_hex_str[20], quot_hex_str[20];
+    char sum_hex_str[5], diff_hex_str[5], prod_hex_str[5], quot_hex_str[5];
     int_to_str(sum_hex, sum_hex_str, 16);
     int_to_str(diff_hex, diff_hex_str, 16);
     int_to_str(prod_hex, prod_hex_str, 16);
