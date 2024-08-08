@@ -44,10 +44,9 @@ void my_printf(const char *format, ...) {
                     break;
                 case 'b':
                     int_val = va_arg(args, int);
-                    for (int j = 31; j >= 0; j--) {
-                        buffer[index++] = (int_val & (1 << j)) ? '1' : '0';
-                    }
-                    buffer[index] = '\0'; // Null-terminate the binary string
+                    snprintf(temp, sizeof(temp), "%04X", int_val & 0xFFFF); // Convert binary to 4 digit hexadecimal
+                    strcpy(&buffer[index], temp);
+                    index += strlen(temp);
                     break;
             }
         } else {
