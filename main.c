@@ -5,6 +5,7 @@ int main() {
     int num1_bin, num2_bin, sum_bin, diff_bin, prod_bin, quot_bin;
     int num1_hex, num2_hex, sum_hex, diff_hex, prod_hex, quot_hex;
     char bin1[32], bin2[32], hex1[20], hex2[20];
+    char result[5];
 
     // Prompt for and read binary numbers
     my_printf("Enter two binary numbers (format: bin1 bin2):\n");
@@ -22,10 +23,18 @@ int main() {
 
     // Display results for binary operations
     my_printf("Binary Operations:\n");
-    my_printf("Sum: %04X\n", sum_bin);
-    my_printf("Difference: %04X\n", diff_bin);
-    my_printf("Product: %04X\n", prod_bin);
-    my_printf("Quotient: %04X\n", quot_bin);
+
+    int_to_str(sum_bin, result, 2);
+    my_printf("Sum: %s\n", result);
+
+    int_to_str(diff_bin, result, 2);
+    my_printf("Difference: %s\n", result);
+
+    int_to_str(prod_bin, result, 2);
+    my_printf("Product: %s\n", result);
+
+    int_to_str(quot_bin, result, 2);
+    my_printf("Quotient: %s\n", result);
 
     // Prompt for and read hexadecimal numbers
     my_printf("Enter two hexadecimal numbers (format: hex1 hex2):\n");
@@ -43,10 +52,18 @@ int main() {
 
     // Display results for hexadecimal operations
     my_printf("Hexadecimal Operations:\n");
-    my_printf("Sum: %04X\n", sum_hex);
-    my_printf("Difference: %04X\n", diff_hex);
-    my_printf("Product: %04X\n", prod_hex);
-    my_printf("Quotient: %04X\n", quot_hex);
+
+    int_to_str(sum_hex, result, 16);
+    my_printf("Sum: %s\n", result);
+
+    int_to_str(diff_hex, result, 16);
+    my_printf("Difference: %s\n", result);
+
+    int_to_str(prod_hex, result, 16);
+    my_printf("Product: %s\n", result);
+
+    int_to_str(quot_hex, result, 16);
+    my_printf("Quotient: %s\n", result);
 
     return 0;
 }
