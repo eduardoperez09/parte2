@@ -19,7 +19,7 @@ int main() {
     prod_bin = multiply(num1_bin, num2_bin);
     quot_bin = divide(num1_bin, num2_bin);
 
-    char sum_bin_str[32], diff_bin_str[32], prod_bin_str[32], quot_bin_str[32];
+    char sum_bin_str[33], diff_bin_str[33], prod_bin_str[33], quot_bin_str[33];
     int_to_str(sum_bin, sum_bin_str, 2);
     int_to_str(diff_bin, diff_bin_str, 2);
     int_to_str(prod_bin, prod_bin_str, 2);
