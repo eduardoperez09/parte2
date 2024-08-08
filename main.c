@@ -1,4 +1,5 @@
 #include "my_printf.h"
+#include "my_scanf.h"
 #include "arithmetic_operations.h"
 #include "conversion.h"
 
