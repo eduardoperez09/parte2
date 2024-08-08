@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include <stdarg.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #define MAX_BUF_SIZE 1024
 
@@ -14,7 +15,6 @@ int my_scanf(const char *format, ...) {
     va_start(args, format);
     char *str;
     int *int_ptr;
-    float *float_ptr;
     while (*format) {
         if (*format == '%') {
             format++;
@@ -36,7 +36,7 @@ int my_scanf(const char *format, ...) {
                 }
                 case 'b': {
                     int_ptr = va_arg(args, int*);
-                    sscanf(buf, "%b", int_ptr); // Este formato '%b' no es estándar en sscanf
+                    sscanf(buf, "%d", int_ptr); // %b no es estándar, usa %d y maneja la conversión
                     break;
                 }
                 default:
