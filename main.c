@@ -22,10 +22,10 @@ int main() {
 
     // Display results for binary operations
     my_printf("Binary Operations:\n");
-    my_printf("Sum: %b\n", sum_bin);
-    my_printf("Difference: %b\n", diff_bin);
-    my_printf("Product: %b\n", prod_bin);
-    my_printf("Quotient: %b\n", quot_bin);
+    my_printf("Sum: %04X\n", sum_bin);
+    my_printf("Difference: %04X\n", diff_bin);
+    my_printf("Product: %04X\n", prod_bin);
+    my_printf("Quotient: %04X\n", quot_bin);
 
     // Prompt for and read hexadecimal numbers
     my_printf("Enter two hexadecimal numbers (format: hex1 hex2):\n");
@@ -43,10 +43,10 @@ int main() {
 
     // Display results for hexadecimal operations
     my_printf("Hexadecimal Operations:\n");
-    my_printf("Sum: %x\n", sum_hex);
-    my_printf("Difference: %x\n", diff_hex);
-    my_printf("Product: %x\n", prod_hex);
-    my_printf("Quotient: %x\n", quot_hex);
+    my_printf("Sum: %04X\n", sum_hex);
+    my_printf("Difference: %04X\n", diff_hex);
+    my_printf("Product: %04X\n", prod_hex);
+    my_printf("Quotient: %04X\n", quot_hex);
 
     return 0;
 }
