@@ -1,5 +1,5 @@
-#include <unistd.h>
 #include <stdarg.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -7,34 +7,49 @@ void my_scanf(const char *format, ...) {
     va_list args;
     va_start(args, format);
 
-    char buffer[1024];
-    int len = read(0, buffer, sizeof(buffer) - 1);
-    buffer[len] = '\0';
+    char buffer[100];
+    read(0, buffer, 100);
+    buffer[strcspn(buffer, "\n")] = '\0';
 
-    char *str_ptr;
-    int *int_ptr;
-
-    int i = 0, j = 0;
-
-    while (format[i] != '\0') {
-        if (format[i] == '%') {
-            i++;
-            switch (format[i]) {
-                case 'd':
-                    int_ptr = va_arg(args, int *);
-                    sscanf(buffer + j, "%d", int_ptr);
-                    while (buffer[j] != ' ' && buffer[j] != '\n') j++;
+    const char *p = format;
+    const char *buf_ptr = buffer;
+    while (*p != '\0') {
+        if (*p == '%') {
+            p++;
+            switch (*p) {
+                case 'd': {
+                    int *int_ptr = va_arg(args, int *);
+                    sscanf(buf_ptr, "%d", int_ptr);
+                    buf_ptr += strcspn(buf_ptr, " ") + 1;
                     break;
-                case 's':
-                    str_ptr = va_arg(args, char *);
-                    sscanf(buffer + j, "%s", str_ptr);
-                    while (buffer[j] != ' ' && buffer[j] != '\n') j++;
+                }
+                case 's': {
+                    char *str = va_arg(args, char *);
+                    sscanf(buf_ptr, "%s", str);
+                    buf_ptr += strcspn(buf_ptr, " ") + 1;
                     break;
+                }
+                case 'f': {
+                    float *float_ptr = va_arg(args, float *);
+                    sscanf(buf_ptr, "%f", float_ptr);
+                    buf_ptr += strcspn(buf_ptr, " ") + 1;
+                    break;
+                }
+                case 'x': {
+                    int *int_ptr = va_arg(args, int *);
+                    sscanf(buf_ptr, "%x", int_ptr);
+                    buf_ptr += strcspn(buf_ptr, " ") + 1;
+                    break;
+                }
+                case 'b': {
+                    char *str = va_arg(args, char *);
+                    sscanf(buf_ptr, "%s", str);
+                    buf_ptr += strcspn(buf_ptr, " ") + 1;
+                    break;
+                }
             }
-        } else {
-            j++;
         }
-        i++;
+        p++;
     }
 
     va_end(args);
