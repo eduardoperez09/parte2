@@ -1,61 +1,58 @@
-#include <unistd.h>
 #include <stdarg.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+#include <unistd.h>
 
 void my_printf(const char *format, ...) {
     va_list args;
     va_start(args, format);
-    char buffer[1024];
-    char temp[64];
-    char *str;
-    int int_val;
-    double dbl_val;
 
-    int index = 0, i = 0;
-
-    while (format[i] != '\0') {
-        if (format[i] == '%') {
-            i++;
-            switch (format[i]) {
-                case 'd':
-                    int_val = va_arg(args, int);
-                    snprintf(temp, sizeof(temp), "%d", int_val);
-                    strcpy(&buffer[index], temp);
-                    index += strlen(temp);
+    for (const char *p = format; *p != '\0'; p++) {
+        if (*p == '%') {
+            p++;
+            switch (*p) {
+                case 'd': {
+                    int num = va_arg(args, int);
+                    char buffer[12];
+                    snprintf(buffer, sizeof(buffer), "%d", num);
+                    write(1, buffer, strlen(buffer));
                     break;
-                case 's':
-                    str = va_arg(args, char *);
-                    strcpy(&buffer[index], str);
-                    index += strlen(str);
+                }
+                case 's': {
+                    char *str = va_arg(args, char *);
+                    write(1, str, strlen(str));
                     break;
-                case 'f':
-                    dbl_val = va_arg(args, double);
-                    snprintf(temp, sizeof(temp), "%.6f", dbl_val);
-                    strcpy(&buffer[index], temp);
-                    index += strlen(temp);
+                }
+                case 'f': {
+                    double num = va_arg(args, double);
+                    char buffer[32];
+                    snprintf(buffer, sizeof(buffer), "%f", num);
+                    write(1, buffer, strlen(buffer));
                     break;
-                case 'x':
-                    int_val = va_arg(args, int);
-                    snprintf(temp, sizeof(temp), "%04X", int_val & 0xFFFF);
-                    strcpy(&buffer[index], temp);
-                    index += strlen(temp);
+                }
+                case 'x': {
+                    int num = va_arg(args, int);
+                    char buffer[12];
+                    snprintf(buffer, sizeof(buffer), "%x", num);
+                    write(1, buffer, strlen(buffer));
                     break;
-                case 'b':
-                    int_val = va_arg(args, int);
-                    snprintf(temp, sizeof(temp), "%04X", int_val & 0xFFFF); // Convert binary to 4 digit hexadecimal
-                    strcpy(&buffer[index], temp);
-                    index += strlen(temp);
+                }
+                case 'b': {
+                    int num = va_arg(args, int);
+                    char buffer[33];
+                    for (int i = 31; i >= 0; i--) {
+                        buffer[31 - i] = (num & (1 << i)) ? '1' : '0';
+                    }
+                    buffer[32] = '\0';
+                    write(1, buffer, 32);
+                    break;
+                }
+                default:
+                    write(1, p, 1);
                     break;
             }
         } else {
-            buffer[index++] = format[i];
+            write(1, p, 1);
         }
-        i++;
     }
 
-    buffer[index] = '\0';
-    write(1, buffer, strlen(buffer));
     va_end(args);
 }
