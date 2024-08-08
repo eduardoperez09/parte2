@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 int str_to_int(const char *str, int base) {
     return strtol(str, NULL, base);
@@ -12,7 +11,9 @@ void int_to_str(int num, char *str, int base) {
     } else if (base == 10) {
         snprintf(str, 12, "%d", num);
     } else if (base == 2) {
-        // Handle binary conversion here if needed
+        for (int i = 0; i < 4; i++) {
+            str[3 - i] = (num & (1 << i)) ? '1' : '0';
+        }
+        str[4] = '\0';
     }
 }
-
