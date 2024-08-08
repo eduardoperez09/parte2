@@ -1,58 +1,96 @@
-#include <stdarg.h>
 #include <unistd.h>
+#include <stdarg.h>
+
+void my_putchar(char c) {
+    write(1, &c, 1);
+}
+
+void my_puts(const char *str) {
+    while (*str) {
+        my_putchar(*str++);
+    }
+}
+
+void my_put_int(int num) {
+    char buffer[12];
+    int i = 0, sign = 1;
+    if (num < 0) {
+        sign = -1;
+        num = -num;
+    }
+    do {
+        buffer[i++] = (num % 10) + '0';
+        num /= 10;
+    } while (num);
+    if (sign == -1) my_putchar('-');
+    while (--i >= 0) {
+        my_putchar(buffer[i]);
+    }
+}
+
+void my_put_hex(unsigned int num) {
+    char hex_chars[] = "0123456789abcdef";
+    char buffer[8];
+    int i = 0;
+    do {
+        buffer[i++] = hex_chars[num % 16];
+        num /= 16;
+    } while (num);
+    while (--i >= 0) {
+        my_putchar(buffer[i]);
+    }
+}
+
+void my_put_bin(unsigned int num) {
+    char buffer[32];
+    int i = 0;
+    if (num == 0) {
+        my_putchar('0');
+        return;
+    }
+    while (num) {
+        buffer[i++] = (num % 2) + '0';
+        num /= 2;
+    }
+    while (--i >= 0) {
+        my_putchar(buffer[i]);
+    }
+}
 
 void my_printf(const char *format, ...) {
     va_list args;
     va_start(args, format);
-
-    for (const char *p = format; *p != '\0'; p++) {
-        if (*p == '%') {
-            p++;
-            switch (*p) {
-                case 'd': {
-                    int num = va_arg(args, int);
-                    char buffer[12];
-                    snprintf(buffer, sizeof(buffer), "%d", num);
-                    write(1, buffer, strlen(buffer));
-                    break;
-                }
-                case 's': {
-                    char *str = va_arg(args, char *);
-                    write(1, str, strlen(str));
-                    break;
-                }
-                case 'f': {
-                    double num = va_arg(args, double);
-                    char buffer[32];
-                    snprintf(buffer, sizeof(buffer), "%f", num);
-                    write(1, buffer, strlen(buffer));
-                    break;
-                }
-                case 'x': {
-                    int num = va_arg(args, int);
-                    char buffer[12];
-                    snprintf(buffer, sizeof(buffer), "%x", num);
-                    write(1, buffer, strlen(buffer));
-                    break;
-                }
-                case 'b': {
-                    int num = va_arg(args, int);
-                    char buffer[33];
-                    for (int i = 31; i >= 0; i--) {
-                        buffer[31 - i] = (num & (1 << i)) ? '1' : '0';
-                    }
-                    buffer[32] = '\0';
-                    write(1, buffer, 32);
-                    break;
-                }
-                default:
-                    write(1, p, 1);
-                    break;
+    char c;
+    while ((c = *format++)) {
+        if (c != '%') {
+            my_putchar(c);
+            continue;
+        }
+        switch (*format++) {
+            case 'd': {
+                int num = va_arg(args, int);
+                my_put_int(num);
+                break;
             }
-        } else {
-            write(1, p, 1);
+            case 's': {
+                char *str = va_arg(args, char*);
+                my_puts(str);
+                break;
+            }
+            case 'x': {
+                unsigned int num = va_arg(args, unsigned int);
+                my_put_hex(num);
+                break;
+            }
+            case 'b': {
+                unsigned int num = va_arg(args, unsigned int);
+                my_put_bin(num);
+                break;
+            }
+            default:
+                my_putchar('%');
+                my_putchar(c);
         }
     }
-
     va_end(args);
 }
