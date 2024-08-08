@@ -19,11 +19,17 @@ int main() {
     prod_bin = multiply(num1_bin, num2_bin);
     quot_bin = divide(num1_bin, num2_bin);
 
+    char sum_bin_str[32], diff_bin_str[32], prod_bin_str[32], quot_bin_str[32];
+    int_to_str(sum_bin, sum_bin_str, 2);
+    int_to_str(diff_bin, diff_bin_str, 2);
+    int_to_str(prod_bin, prod_bin_str, 2);
+    int_to_str(quot_bin, quot_bin_str, 2);
+
     my_printf("Binary Operations:\n");
-    my_printf("Sum: %b\n", sum_bin);
-    my_printf("Difference: %b\n", diff_bin);
-    my_printf("Product: %b\n", prod_bin);
-    my_printf("Quotient: %b\n", quot_bin);
+    my_printf("Sum: %s\n", sum_bin_str);
+    my_printf("Difference: %s\n", diff_bin_str);
+    my_printf("Product: %s\n", prod_bin_str);
+    my_printf("Quotient: %s\n", quot_bin_str);
 
     // Ejemplo de entrada para números hexadecimales
     my_printf("Enter two hexadecimal numbers (format: hex1 hex2):\n");
@@ -36,11 +42,17 @@ int main() {
     prod_hex = multiply(num1_hex, num2_hex);
     quot_hex = divide(num1_hex, num2_hex);
 
+    char sum_hex_str[20], diff_hex_str[20], prod_hex_str[20], quot_hex_str[20];
+    int_to_str(sum_hex, sum_hex_str, 16);
+    int_to_str(diff_hex, diff_hex_str, 16);
+    int_to_str(prod_hex, prod_hex_str, 16);
+    int_to_str(quot_hex, quot_hex_str, 16);
+
     my_printf("Hexadecimal Operations:\n");
-    my_printf("Sum: %x\n", sum_hex);
-    my_printf("Difference: %x\n", diff_hex);
-    my_printf("Product: %x\n", prod_hex);
-    my_printf("Quotient: %x\n", quot_hex);
+    my_printf("Sum: %s\n", sum_hex_str);
+    my_printf("Difference: %s\n", diff_hex_str);
+    my_printf("Product: %s\n", prod_hex_str);
+    my_printf("Quotient: %s\n", quot_hex_str);
 
     return 0;
 }
